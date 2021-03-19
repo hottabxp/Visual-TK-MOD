@@ -914,18 +914,40 @@ $(function () {
     if (!isEmpty(str)) {
         //如果不为空就操作,弹出对话框 
         //document.getElementById("canvas").innerHTML = str;
-        if (confirm("Resume last editing session?")) {
-            var width = localStorage.getItem('visualpydata-width', width);
-            var height = localStorage.getItem('visualpydata-height', height);
-            document.getElementById("canvas").innerHTML = str;
+        swal({
+            title: "Продолжить предыдущую сессию?",
+            icon: "info",
+            buttons: true,
+            dangerMode: true,
+            buttons: {
+                confirm : 'Да',
+                cancel : 'Нет'
+        },
+          })
+          .then((continue_session) => {
+            if (continue_session) {
+                var width = localStorage.getItem('visualpydata-width', width);
+                var height = localStorage.getItem('visualpydata-height', height);
+                document.getElementById("canvas").innerHTML = str;
 
-            document.getElementById("canvas").style.width = width;
-            document.getElementById("canvas").style.height = height;
+                document.getElementById("canvas").style.width = width;
+                document.getElementById("canvas").style.height = height;
+            } else {
+                localStorage.setItem('visualpydata', "");
+            }
+          });
+        // if (confirm("Resume last editing session?")) {
+        //     var width = localStorage.getItem('visualpydata-width', width);
+        //     var height = localStorage.getItem('visualpydata-height', height);
+        //     document.getElementById("canvas").innerHTML = str;
 
-        }
-        else {
-            localStorage.setItem('visualpydata', "");
-        }
+        //     document.getElementById("canvas").style.width = width;
+        //     document.getElementById("canvas").style.height = height;
+
+        // }
+        // else {
+        //     localStorage.setItem('visualpydata', "");
+        // }
     }
 
     //srccode 移动位置
